@@ -1,5 +1,7 @@
 # Project exclude paths
 /wishlist_env/
 .idea/
+__pycache__
 wishlist/db.sqlite3
 wishlist/.env
+wishlist/.vscode/
