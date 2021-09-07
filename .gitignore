@@ -1,0 +1,4 @@
+# Project exclude paths
+/wishlist_env/
+.idea/
+wishlist/db.sqlite3
