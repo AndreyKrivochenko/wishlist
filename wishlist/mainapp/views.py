@@ -31,15 +31,20 @@ def about(request):
 
 def list_page(request, pk):
     wishlist = get_object_or_404(WishList, pk=pk)
+    products = Product.objects.all()
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'title' in request.POST:
         product_form = ProductCreateForm(request.POST)
-        print(request.POST)
         if product_form.is_valid():
             product_form.save()
             wishlist_product_add = Product.objects.get(title=request.POST['title'])
             wishlist.products.add(wishlist_product_add)
             return HttpResponseRedirect(reverse('wish_list_page', args=[pk]))
+    elif request.method == 'POST' and 'title' not in request.POST:
+        product_form = ProductCreateForm()
+        wishlist_product_add = Product.objects.get(pk=int(request.POST['select-exist']))
+        wishlist.products.add(wishlist_product_add)
+        return HttpResponseRedirect(reverse('wish_list_page', args=[pk]))
     else:
         product_form = ProductCreateForm()
 
@@ -47,6 +52,7 @@ def list_page(request, pk):
         'wishlist': wishlist,
         'wishlist_owner': wishlist.owner == request.user,
         'create_form': product_form,
+        'products': products,
     }
     return render(request, 'mainapp/wish_list.html', context=context)
     
