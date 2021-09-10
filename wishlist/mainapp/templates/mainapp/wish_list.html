@@ -1,0 +1,65 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Список желаний: {{ wishlist.title }}</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Ссылка</th>
+                <th scope="col">Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in wishlist.products.all %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ product.title }}</td>
+                <td><a href="{{ product.link }}">{{ product.link }}</a></td>
+                <td>{{ product.price }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if wishlist_owner %}
+
+        <h3 class="my-5 text-center">Добавить новую хотелку</h3> 
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ create_form.non_field_errors }}
+                    <div class="mb-3">
+                        <label for="{{ create_form.title.id }}" class="form-label">Название</label>
+                        <input type="text" class="form-control" name="{{ create_form.title.name }}" id="{{ create_form.title.id }}" placeholder="Название товара">
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ create_form.link.id }}" class="form-label">Ссылка</label>
+                        <input type="url" class="form-control" name="{{ create_form.link.name }}" id="{{ create_form.link.id }}" placeholder="Ссылка на товар">
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ create_form.price.id }}" class="form-label">Цена</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" name="{{ create_form.price.name }}" id="{{ create_form.price.id }}" aria-label="Amount (to the nearest dollar)">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>       
+
+    {% endif %}
+
+</div>
+
+{% endblock content %}

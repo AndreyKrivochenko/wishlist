@@ -1,7 +1,29 @@
 {% extends 'mainapp/base.html' %}
 
-{% block title %}Main page your wish list{% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
-    <h1>Wishlist - Main</h1>
+    <p class="fs-1 text-center my-5">Мои списки желаний</p>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            {% for wishlist in wishlists %}
+
+            <div class="col-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                      Список желаний
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{ wishlist.title }}</h5>
+                      <p class="card-text">{{ wishlist.description }}</p>
+                      <a href="{% url 'wish_list_page' wishlist.pk %}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                  </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
 {% endblock content %}

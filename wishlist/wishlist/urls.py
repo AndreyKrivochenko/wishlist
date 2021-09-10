@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from mainapp.views import index, contact, about
+from mainapp.views import index, contact, about, list_page
 
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path('', index, name='index_page'),
     path('contact/', contact, name='contact_page'),
     path('about/', about, name='about_page'),
+    path('wish/<int:pk>/', list_page, name='wish_list_page'),
 ]
