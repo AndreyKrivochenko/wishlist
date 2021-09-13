@@ -36,12 +36,10 @@ def list_page(request, pk):
     if request.method == 'POST' and 'title' in request.POST:
         product_form = ProductCreateForm(request.POST)
         if product_form.is_valid():
-            product_form.save()
-            wishlist_product_add = Product.objects.get(title=request.POST['title'])
+            wishlist_product_add = product_form.save()
             wishlist.products.add(wishlist_product_add)
             return HttpResponseRedirect(reverse('wish_list_page', args=[pk]))
     elif request.method == 'POST' and 'title' not in request.POST:
-        product_form = ProductCreateForm()
         wishlist_product_add = Product.objects.get(pk=int(request.POST['select-exist']))
         wishlist.products.add(wishlist_product_add)
         return HttpResponseRedirect(reverse('wish_list_page', args=[pk]))

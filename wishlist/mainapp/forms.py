@@ -9,9 +9,7 @@ class ProductCreateForm(forms.ModelForm):
         model = Product
         fields = ('title', 'link', 'price')
 
-
     def clean_title(self):
-
         data = self.cleaned_data['title']
 
         if Product.objects.filter(title=data).exists():
